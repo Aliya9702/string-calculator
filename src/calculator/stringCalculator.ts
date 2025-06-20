@@ -4,7 +4,7 @@
  * - empty string
  * - single number
  * - multiple numbers separated by commas or newlines
- * - custom delimiters of any length like //[***]\n
+ * - multiple custom delimiters with any length (e.g. //[***][%]\n)
  * - throws error on negatives
  * - ignores numbers > 1000
  */
@@ -15,23 +15,21 @@ export function add(numbers: string): number {
   let numberString = numbers;
 
   if (numbers.startsWith("//")) {
-    // Handle custom delimiter(s)
     const delimiterSectionEnd = numbers.indexOf("\n");
     const delimiterSection = numbers.slice(2, delimiterSectionEnd);
 
-    // Check for delimiters wrapped in []
-    if (delimiterSection.startsWith("[")) {
-      // Extract delimiter(s)
-      const delimiterPatterns = delimiterSection.match(/\[.*?\]/g) || [];
-      // Escape special regex chars in delimiters and join them with |
+    // Match multiple delimiters inside []
+    const delimiterPatterns = delimiterSection.match(/\[.*?\]/g);
+
+    if (delimiterPatterns) {
+      // Escape special regex chars in each delimiter and join with |
       const escapedDelimiters = delimiterPatterns
         .map((d) => d.slice(1, -1).replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"))
         .join("|");
       delimiters = new RegExp(escapedDelimiters);
     } else {
-      // Single character delimiter without brackets
-      const delimiter = delimiterSection;
-      delimiters = new RegExp(`[${delimiter}]`);
+      // Single char delimiter without brackets
+      delimiters = new RegExp(`[${delimiterSection}]`);
     }
 
     numberString = numbers.slice(delimiterSectionEnd + 1);

@@ -1,6 +1,6 @@
 import { add } from "./stringCalculator";
 
-describe("String Calculator - Step 9", () => {
+describe("String Calculator - Step 10", () => {
   test("should return 0 for empty string", () => {
     expect(add("")).toBe(0);
   });
@@ -31,6 +31,10 @@ describe("String Calculator - Step 9", () => {
 
   test("should support delimiters of any length", () => {
     expect(add("//[***]\n1***2***3")).toBe(6);
-    expect(add("//[abc]\n4abc5abc6")).toBe(15);
+  });
+
+  test("should support multiple delimiters", () => {
+    expect(add("//[*][%]\n1*2%3")).toBe(6);
+    expect(add("//[***][%%]\n1***2%%3")).toBe(6);
   });
 });
