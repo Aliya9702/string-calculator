@@ -4,28 +4,30 @@
  * - empty string
  * - single number
  * - multiple numbers separated by commas or newlines
- * - custom single-character delimiter syntax: "//[delimiter]\n[numbers]"
+ * - custom single-character delimiter
+ * Throws error if negatives found, listing all negatives.
  */
 export function add(numbers: string): number {
   if (!numbers) return 0;
 
-  let delimiters = /,|\n/; // default delimiters
-
+  let delimiters = /,|\n/;
   let numberString = numbers;
 
-  // Check for custom delimiter syntax at the start
   if (numbers.startsWith("//")) {
-    // Extract delimiter, e.g. "//;\n1;2"
     const delimiter = numbers[2];
     delimiters = new RegExp(`[${delimiter}\n]`);
-    numberString = numbers.slice(4); // remove the first line
+    numberString = numbers.slice(4);
   }
 
-  // Split by delimiters (comma/newline or custom)
   const parts = numberString.split(delimiters);
+  const nums = parts.map(Number);
 
-  // Sum parsed numbers
-  const sum = parts.reduce((acc, val) => acc + parseInt(val), 0);
+  // Check for negatives
+  const negatives = nums.filter((n) => n < 0);
+  if (negatives.length > 0) {
+    throw new Error(`negatives not allowed: ${negatives.join(", ")}`);
+  }
 
+  const sum = nums.reduce((acc, val) => acc + val, 0);
   return sum;
 }

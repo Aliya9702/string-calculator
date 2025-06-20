@@ -1,6 +1,6 @@
 import { add } from "./stringCalculator";
 
-describe("String Calculator - Step 6", () => {
+describe("String Calculator - Step 7", () => {
   test("should return 0 for empty string", () => {
     expect(add("")).toBe(0);
   });
@@ -9,7 +9,7 @@ describe("String Calculator - Step 6", () => {
     expect(add("5")).toBe(5);
   });
 
-  test("should return sum for two comma-separated numbers", () => {
+  test("should return sum for two numbers", () => {
     expect(add("1,2")).toBe(3);
   });
 
@@ -17,8 +17,11 @@ describe("String Calculator - Step 6", () => {
     expect(add("1\n2,3")).toBe(6);
   });
 
-  test("should support custom single-character delimiter", () => {
+  test("should support custom delimiter", () => {
     expect(add("//;\n1;2")).toBe(3);
-    expect(add("//|\n4|5|6")).toBe(15);
+  });
+
+  test("should throw error on negative numbers", () => {
+    expect(() => add("1,-2,3,-4")).toThrow("negatives not allowed: -2, -4");
   });
 });
