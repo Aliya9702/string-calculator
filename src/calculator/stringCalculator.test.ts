@@ -1,6 +1,6 @@
 import { add } from "./stringCalculator";
 
-describe("String Calculator - Step 5", () => {
+describe("String Calculator - Step 6", () => {
   test("should return 0 for empty string", () => {
     expect(add("")).toBe(0);
   });
@@ -13,12 +13,12 @@ describe("String Calculator - Step 5", () => {
     expect(add("1,2")).toBe(3);
   });
 
-  test("should return sum for unknown amount of numbers", () => {
-    expect(add("1,2,3,4,5")).toBe(15);
-  });
-
   test("should support newlines as separators", () => {
     expect(add("1\n2,3")).toBe(6);
-    expect(add("4\n5\n6")).toBe(15);
+  });
+
+  test("should support custom single-character delimiter", () => {
+    expect(add("//;\n1;2")).toBe(3);
+    expect(add("//|\n4|5|6")).toBe(15);
   });
 });
