@@ -5,7 +5,8 @@
  * - single number
  * - multiple numbers separated by commas or newlines
  * - custom single-character delimiter
- * Throws error if negatives found, listing all negatives.
+ * - throws error on negatives
+ * - ignores numbers > 1000
  */
 export function add(numbers: string): number {
   if (!numbers) return 0;
@@ -22,12 +23,14 @@ export function add(numbers: string): number {
   const parts = numberString.split(delimiters);
   const nums = parts.map(Number);
 
-  // Check for negatives
   const negatives = nums.filter((n) => n < 0);
   if (negatives.length > 0) {
     throw new Error(`negatives not allowed: ${negatives.join(", ")}`);
   }
 
-  const sum = nums.reduce((acc, val) => acc + val, 0);
+  // Ignore numbers greater than 1000
+  const filtered = nums.filter((n) => n <= 1000);
+
+  const sum = filtered.reduce((acc, val) => acc + val, 0);
   return sum;
 }

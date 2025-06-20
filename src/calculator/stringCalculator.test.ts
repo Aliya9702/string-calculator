@@ -1,6 +1,6 @@
 import { add } from "./stringCalculator";
 
-describe("String Calculator - Step 7", () => {
+describe("String Calculator - Step 8", () => {
   test("should return 0 for empty string", () => {
     expect(add("")).toBe(0);
   });
@@ -23,5 +23,10 @@ describe("String Calculator - Step 7", () => {
 
   test("should throw error on negative numbers", () => {
     expect(() => add("1,-2,3,-4")).toThrow("negatives not allowed: -2, -4");
+  });
+
+  test("should ignore numbers greater than 1000", () => {
+    expect(add("2,1001")).toBe(2);
+    expect(add("1000,1001,3")).toBe(1003);
   });
 });
