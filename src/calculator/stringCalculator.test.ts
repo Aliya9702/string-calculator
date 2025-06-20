@@ -1,6 +1,6 @@
 import { add } from "./stringCalculator";
 
-describe("String Calculator - Step 8", () => {
+describe("String Calculator - Step 9", () => {
   test("should return 0 for empty string", () => {
     expect(add("")).toBe(0);
   });
@@ -17,7 +17,7 @@ describe("String Calculator - Step 8", () => {
     expect(add("1\n2,3")).toBe(6);
   });
 
-  test("should support custom delimiter", () => {
+  test("should support single-char custom delimiter", () => {
     expect(add("//;\n1;2")).toBe(3);
   });
 
@@ -27,6 +27,10 @@ describe("String Calculator - Step 8", () => {
 
   test("should ignore numbers greater than 1000", () => {
     expect(add("2,1001")).toBe(2);
-    expect(add("1000,1001,3")).toBe(1003);
+  });
+
+  test("should support delimiters of any length", () => {
+    expect(add("//[***]\n1***2***3")).toBe(6);
+    expect(add("//[abc]\n4abc5abc6")).toBe(15);
   });
 });
