@@ -6,10 +6,10 @@
 export function add(numbers: string): number {
   if (!numbers) return 0;
 
-  // Split by comma to handle multiple numbers
+  // Split input by comma
   const parts = numbers.split(",");
 
-  // Sum all parsed numbers
+  // Sum all numbers
   const sum = parts.reduce((acc, val) => acc + parseInt(val), 0);
 
   return sum;
