@@ -6,8 +6,8 @@
 export function add(numbers: string): number {
   if (!numbers) return 0;
 
-  // Split input by comma
-  const parts = numbers.split(",");
+  // Split by comma or newline using regex
+  const parts = numbers.split(/,|\n/);
 
   // Sum all numbers
   const sum = parts.reduce((acc, val) => acc + parseInt(val), 0);
